@@ -1,0 +1,23 @@
+{
+  "name": "local-dev",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@lib/utf-8": "^0.1.0",
+    "@solana/spl-token": "^0.4.8",
+    "@solana/web3.js": "^1.95.2",
+    "bip39": "^3.1.0",
+    "bs58": "^6.0.0",
+    "tweetnacl": "^1.0.3"
+  }
+}
