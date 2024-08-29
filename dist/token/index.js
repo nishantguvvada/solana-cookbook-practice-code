@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const web3_js_1 = require("@solana/web3.js");
 const spl_token_1 = require("@solana/spl-token");
 const bs58_1 = __importDefault(require("bs58"));
+const spl_token_2 = require("@solana/spl-token");
 function createToken() {
     return __awaiter(this, void 0, void 0, function* () {
         const connection = new web3_js_1.Connection((0, web3_js_1.clusterApiUrl)("devnet"), "confirmed");
@@ -112,13 +113,68 @@ function burnTokens() {
         const txhash = yield (0, spl_token_1.burnChecked)(connection, feePayer, tokenAccountPubKey, mintPubKey, feePayer.publicKey, 1e8, 8);
     });
 }
+function closeATA() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connection = new web3_js_1.Connection((0, web3_js_1.clusterApiUrl)("devnet"), "confirmed");
+        const feePayer = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+        const tokenAccountPubKey = new web3_js_1.PublicKey("eD9PfLq2H8LxsJbH7cJuWfcwqA8coUVs5ZaRKjDiM1d");
+        const alice = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+        let txhash = yield (0, spl_token_1.closeAccount)(connection, feePayer, tokenAccountPubKey, alice.publicKey, alice);
+        console.log(`txhash: ${txhash}`);
+    });
+}
+function wrappedSOL() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connection = new web3_js_1.Connection((0, web3_js_1.clusterApiUrl)("devnet"), "confirmed");
+        const feePayer = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+        const alice = web3_js_1.Keypair.fromSecretKey(bs58_1.default.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"));
+        const ata = yield (0, spl_token_1.getAssociatedTokenAddress)(spl_token_2.NATIVE_MINT, alice.publicKey);
+        let tx = new web3_js_1.Transaction().add(web3_js_1.SystemProgram.transfer({
+            fromPubkey: alice.publicKey,
+            toPubkey: ata,
+            lamports: web3_js_1.LAMPORTS_PER_SOL / 10
+        }), (0, spl_token_1.createSyncNativeInstruction)(ata));
+        console.log(`txhash: ${yield connection.sendTransaction(tx, [feePayer, alice])}`);
+    });
+}
+function fetchAllTokenAccounts() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connection = new web3_js_1.Connection((0, web3_js_1.clusterApiUrl)("devnet"), "confirmed");
+        const owner = new web3_js_1.PublicKey("J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4");
+        let response = yield connection.getParsedTokenAccountsByOwner(owner, {
+            programId: spl_token_2.TOKEN_PROGRAM_ID
+        });
+        response.value.forEach((accountInfo) => {
+            console.log(`pubkey: ${accountInfo.pubkey.toBase58()}`);
+            console.log(`mint: ${accountInfo.account.data["parsed"]["info"]["mint"]}`);
+            console.log(`owner: ${accountInfo.account.data["parsed"]["info"]["owner"]}`);
+            console.log(`decimals: ${accountInfo.account.data["parsed"]["info"]["tokenAmount"]["decimals"]}`);
+            console.log(`amount: ${accountInfo.account.data["parsed"]["info"]["tokenAmount"]["amount"]}`);
+            console.log("====================");
+        });
+        // pubkey: DuWFnt8sNSE1hNVqecbgbbrsp24Tjvu41xNQPwpL4Ji4
+        // mint: DKs1MDC6M7WWHMaPio7rYLuuexeGyqxrA17NWHswT7bs
+        // owner: J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
+        // decimals: 8
+        // amount: 0
+        // ====================
+        // pubkey: Bx4rttoEYaQCyjhYnC8E4q57z6mLd9Mg4PWEQUptcifo
+        // mint: DKs1MDC6M7WWHMaPio7rYLuuexeGyqxrA17NWHswT7bs
+        // owner: J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
+        // decimals: 8
+        // amount: 0
+    });
+}
 (() => __awaiter(void 0, void 0, void 0, function* () {
     // createToken();
     // getTokenDetails();
     // getTokenAccountDetails();
     // getTokenAccountsBalance();
     // mintTokens();
-    transferTokens();
+    // transferTokens();
     // burnTokens();
+    // closeATA();
+    // wrappedSOL();
+    fetchAllTokenAccounts();
 }))();
 //# sourceMappingURL=index.js.map

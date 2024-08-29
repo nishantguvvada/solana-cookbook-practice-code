@@ -3,7 +3,9 @@ import {
     clusterApiUrl,
     Keypair,
     SystemProgram,
-    PublicKey
+    PublicKey,
+    LAMPORTS_PER_SOL,
+    Transaction
 } from "@solana/web3.js";
 import {
     getMint,
@@ -15,9 +17,13 @@ import {
     createAssociatedTokenAccount,
     transferChecked,
     burnChecked,
-    Account
+    Account,
+    closeAccount,
+    createSyncNativeInstruction,
+    getAssociatedTokenAddress
 } from "@solana/spl-token";
 import bs58 from "bs58";
+import { NATIVE_MINT, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
 async function createToken() {
     const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
@@ -208,12 +214,96 @@ async function burnTokens() {
 
 }
 
+async function closeATA(){
+    const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
+
+    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+
+    const tokenAccountPubKey = new PublicKey("eD9PfLq2H8LxsJbH7cJuWfcwqA8coUVs5ZaRKjDiM1d");
+
+    const alice = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+
+    let txhash = await closeAccount(
+        connection,
+        feePayer,
+        tokenAccountPubKey,
+        alice.publicKey,
+        alice
+    );
+
+    console.log(`txhash: ${txhash}`);
+}
+
+async function wrappedSOL(){
+    const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
+
+    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+
+    const alice = Keypair.fromSecretKey(bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"))
+    
+    const ata = await getAssociatedTokenAddress(
+        NATIVE_MINT,
+        alice.publicKey
+    )
+
+    let tx = new Transaction().add(
+        SystemProgram.transfer({
+            fromPubkey: alice.publicKey,
+            toPubkey: ata,
+            lamports: LAMPORTS_PER_SOL / 10
+        }),
+        createSyncNativeInstruction(ata)
+    );
+
+    console.log(`txhash: ${await connection.sendTransaction(tx, [feePayer, alice])}`)
+}
+
+async function fetchAllTokenAccounts(){
+    const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
+
+    const owner = new PublicKey("J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4");
+
+    let response = await connection.getParsedTokenAccountsByOwner(owner, {
+        programId: TOKEN_PROGRAM_ID 
+    })
+
+    response.value.forEach((accountInfo) => {
+        console.log(`pubkey: ${accountInfo.pubkey.toBase58()}`);
+        console.log(`mint: ${accountInfo.account.data["parsed"]["info"]["mint"]}`);
+        console.log(
+          `owner: ${accountInfo.account.data["parsed"]["info"]["owner"]}`
+        );
+        console.log(
+          `decimals: ${accountInfo.account.data["parsed"]["info"]["tokenAmount"]["decimals"]}`
+        );
+        console.log(
+          `amount: ${accountInfo.account.data["parsed"]["info"]["tokenAmount"]["amount"]}`
+        );
+        console.log("====================");
+      });
+
+// pubkey: DuWFnt8sNSE1hNVqecbgbbrsp24Tjvu41xNQPwpL4Ji4
+// mint: DKs1MDC6M7WWHMaPio7rYLuuexeGyqxrA17NWHswT7bs
+// owner: J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
+// decimals: 8
+// amount: 0
+// ====================
+// pubkey: Bx4rttoEYaQCyjhYnC8E4q57z6mLd9Mg4PWEQUptcifo
+// mint: DKs1MDC6M7WWHMaPio7rYLuuexeGyqxrA17NWHswT7bs
+// owner: J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
+// decimals: 8
+// amount: 0
+}
+
 (async () => {
     // createToken();
     // getTokenDetails();
     // getTokenAccountDetails();
     // getTokenAccountsBalance();
     // mintTokens();
-    transferTokens();
+    // transferTokens();
     // burnTokens();
+    // closeATA();
+    // wrappedSOL();
+    fetchAllTokenAccounts();
 })();
