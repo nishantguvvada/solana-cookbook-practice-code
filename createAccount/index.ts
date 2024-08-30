@@ -55,14 +55,14 @@ const createAccountwithSeeds = async () => {
   // 8wcKqzyS8jRsorkptP675S7wokurtDjKqCHWRM7Cy9PF
   const feePayer = Keypair.fromSecretKey(
     bs58.decode(
-      "f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"
+      ""
     )
   );
 
   // J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
   const base = Keypair.fromSecretKey(
     bs58.decode(
-      "4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"
+      ""
     )
   );
 

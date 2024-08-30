@@ -185,7 +185,7 @@ const computeUnits = async () => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
     const payer = new PublicKey("8wcKqzyS8jRsorkptP675S7wokurtDjKqCHWRM7Cy9PF");
-    const payerKeypair = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"))
+    const payerKeypair = Keypair.fromSecretKey(bs58.decode(""))
 
     const toAccount = new PublicKey("J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4");
 

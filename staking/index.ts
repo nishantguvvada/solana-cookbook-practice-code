@@ -23,7 +23,7 @@ const getValidators = async () => {
 
 const createStakeAccount = async () => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-    const wallet = Keypair.fromSecretKey(bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"))
+    const wallet = Keypair.fromSecretKey(bs58.decode(""))
 
     const stakeAccount = Keypair.generate();
 
@@ -76,16 +76,9 @@ const createStakeAccount = async () => {
 const delegateStake = async () => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
-    const wallet = Keypair.fromSecretKey(bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"))
+    const wallet = Keypair.fromSecretKey(bs58.decode(""))
 
-    const stakeAccount = Keypair.fromSecretKey(new Uint8Array([
-        2,  32, 140, 146, 207, 225,  45, 253,  60,  69, 121,
-      177,  94, 195,  46, 154,  15, 195, 245,  66,  68, 234,
-      168, 105, 255, 152,  97,  17, 214, 190,  69, 166,  49,
-      105, 136, 205,   0, 130,  20, 251, 100, 120, 214, 213,
-      252, 115,  99,  25, 204,  97, 245, 108, 222, 208, 229,
-       69,  49, 115, 104,   6, 190,  82,   7, 200
-    ]));
+    const stakeAccount = Keypair.fromSecretKey(new Uint8Array([]));
 
     const validators = await connection.getVoteAccounts();
     const selectedValidator = validators.current[0]
@@ -161,7 +154,7 @@ const viewAllDelegators = async () => {
 const deactivateStake = async () => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
-    const wallet = Keypair.fromSecretKey(bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"))
+    const wallet = Keypair.fromSecretKey(bs58.decode(""))
 
     const stakeAccount = Keypair.fromSecretKey(new Uint8Array([
         2,  32, 140, 146, 207, 225,  45, 253,  60,  69, 121,
@@ -190,7 +183,7 @@ const deactivateStake = async () => {
 const withdrawStake = async () => {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
-    const wallet = Keypair.fromSecretKey(bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"))
+    const wallet = Keypair.fromSecretKey(bs58.decode(""))
 
     const stakeAccount = Keypair.fromSecretKey(new Uint8Array([
         2,  32, 140, 146, 207, 225,  45, 253,  60,  69, 121,

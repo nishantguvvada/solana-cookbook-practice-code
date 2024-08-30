@@ -29,10 +29,10 @@ async function createToken() {
     const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
 
     // 8wcKqzyS8jRsorkptP675S7wokurtDjKqCHWRM7Cy9PF
-    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+    const feePayer = Keypair.fromSecretKey(bs58.decode(""));
     // J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
     const alice = Keypair.fromSecretKey(
-        bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k")
+        bs58.decode("")
     );
 
 //     Mint Public Key:  64sbYdAQ7VGPbxKUVhZjUb8Apsqak6fUnTHgJCSqZnq2
@@ -78,7 +78,7 @@ async function getTokenDetails() {
 async function getTokenAccountDetails() {
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
-    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+    const feePayer = Keypair.fromSecretKey(bs58.decode(""));
     // J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
 
     const mintPubKey = new PublicKey("DKs1MDC6M7WWHMaPio7rYLuuexeGyqxrA17NWHswT7bs");
@@ -116,14 +116,14 @@ async function mintTokens() {
 
     const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
 
-    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+    const feePayer = Keypair.fromSecretKey(bs58.decode(""));
 
     const mintPubKey = new PublicKey("64sbYdAQ7VGPbxKUVhZjUb8Apsqak6fUnTHgJCSqZnq2");
 
     const tokenAccountPubKey = new PublicKey("Bx4rttoEYaQCyjhYnC8E4q57z6mLd9Mg4PWEQUptcifo");
 
     const alice = Keypair.fromSecretKey(
-        bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k")
+        bs58.decode("")
     );
 
     const tokenAmountBefore = await connection.getTokenAccountBalance(tokenAccountPubKey);
@@ -153,13 +153,13 @@ async function transferTokens() {
 
     const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
     // 8wcKqzyS8jRsorkptP675S7wokurtDjKqCHWRM7Cy9PF
-    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+    const feePayer = Keypair.fromSecretKey(bs58.decode(""));
     // J2BkNs4cGqh7PAFgTjncMi9FVoiFwzpEuu1yc5H73Mp4
     const alice = Keypair.fromSecretKey(
-        bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k")
+        bs58.decode("")
     );
     const velma = Keypair.fromSecretKey(
-        bs58.decode("5fTMxNL3ryaS69RjSxgFcAVDuPX5hMs7HkHR9mSs3VwYG6WnxDRner4R9tDVN8H1GaE7iPxLDs8nHG429x2owL9w")
+        bs58.decode("")
     );
     // 64sbYdAQ7VGPbxKUVhZjUb8Apsqak6fUnTHgJCSqZnq2
     const mintPubKey = new PublicKey("64sbYdAQ7VGPbxKUVhZjUb8Apsqak6fUnTHgJCSqZnq2");
@@ -192,10 +192,10 @@ async function burnTokens() {
     const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
 
     // 8wcKqzyS8jRsorkptP675S7wokurtDjKqCHWRM7Cy9PF
-    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+    const feePayer = Keypair.fromSecretKey(bs58.decode(""));
 
     const alice = Keypair.fromSecretKey(
-        bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k")
+        bs58.decode("")
     );
 
     const mintPubKey = new PublicKey("DKs1MDC6M7WWHMaPio7rYLuuexeGyqxrA17NWHswT7bs");
@@ -237,9 +237,9 @@ async function closeATA(){
 async function wrappedSOL(){
     const connection = new Connection(clusterApiUrl("devnet"),"confirmed");
 
-    const feePayer = Keypair.fromSecretKey(bs58.decode("f1fXwJcz1e5nY3B61gnDp6BDS67uE5g2vXvR1WckfpxbwNPqXCDw9pKwHQ1eyGdeW24DwntmaJ78fRbC2vRiFCV"));
+    const feePayer = Keypair.fromSecretKey(bs58.decode(""));
 
-    const alice = Keypair.fromSecretKey(bs58.decode("4JXffdfaXNsVHt6Fa9A5GX8CNDHzAyxcxRvs8ZfwTXCM49S9Jiy8XoNaginLGjT6DUKpuL3bbj2dJw3oAzaqv66k"))
+    const alice = Keypair.fromSecretKey(bs58.decode(""))
     
     const ata = await getAssociatedTokenAddress(
         NATIVE_MINT,
