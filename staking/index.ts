@@ -178,14 +178,7 @@ const withdrawStake = async () => {
 
     const wallet = Keypair.fromSecretKey(bs58.decode(""))
 
-    const stakeAccount = Keypair.fromSecretKey(new Uint8Array([
-        2,  32, 140, 146, 207, 225,  45, 253,  60,  69, 121,
-      177,  94, 195,  46, 154,  15, 195, 245,  66,  68, 234,
-      168, 105, 255, 152,  97,  17, 214, 190,  69, 166,  49,
-      105, 136, 205,   0, 130,  20, 251, 100, 120, 214, 213,
-      252, 115,  99,  25, 204,  97, 245, 108, 222, 208, 229,
-       69,  49, 115, 104,   6, 190,  82,   7, 200
-    ]));
+    const stakeAccount = Keypair.fromSecretKey(new Uint8Array([]));
 
     let stakeBalance = await connection.getBalance(stakeAccount.publicKey);
     console.log(`Stake account balance: ${stakeBalance / LAMPORTS_PER_SOL} SOL`);
