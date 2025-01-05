@@ -5,7 +5,6 @@ import wallet from "../id.json"
 import base58 from "bs58";
 import fs from "fs";
 import Arweave from 'arweave';
-import walletFile from "../walletFile.json";
 
 const RPC_ENDPOINT = "https://api.devnet.solana.com";
 const umi = createUmi(RPC_ENDPOINT);
